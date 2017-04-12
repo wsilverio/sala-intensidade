@@ -55,4 +55,7 @@ bash <(curl -s https://raw.githubusercontent.com/wsilverio/sala-intensidade/mast
 `Advanced Options >> Audio >> Force 3.5mm ('headphone') jack >> Ok`
 `Finish >>  Would you like to reboot now? >> No`  
 
+* Adicionar a seguinte linha ao crontab:
+`@reboot cd /home/pi/luz-ciencia-emocao/sala-intensidade/ && python sala.py`
+
 * O sistema reiniciará automaticamente  

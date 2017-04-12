@@ -17,7 +17,9 @@ echo -e "#     # #       #       #   #   ";
 echo -e "#     # #       #       #    #  ";
 echo -e " #####  #       #       #     # ";
 
+echo -e ""
 echo -e "LUZ CIENCIA E EMOCAO"
+echo -e ""
 
 echo -e "Atualizando o sistema..."
 sudo apt-get update -y > /dev/null;
