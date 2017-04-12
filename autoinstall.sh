@@ -7,6 +7,18 @@ DIRETORIO="$HOME/luz-ciencia-emocao";
 REPOSITORIO="sala-intensidade";
 GITLINK="https://github.com/wsilverio/";
 
+clear;
+
+echo - e "#     # ####### ######  ######  ";
+echo - e "#     # #       #     # #     # ";
+echo - e "#     # #       #     # #     # ";
+echo - e "#     # #####   ######  ######  ";
+echo - e "#     # #       #       #   #   ";
+echo - e "#     # #       #       #    #  ";
+echo - e " #####  #       #       #     # ";
+
+echo -e "LUZ CIENCIA E EMOCAO"
+
 echo -e "Atualizando o sistema..."
 sudo apt-get update -y > /dev/null;
 echo -e "Instalando pacotes..."
@@ -17,13 +29,9 @@ sudo pip install $PACOTES_PIP > /dev/null;
 echo -e "Removendo repositorio anterior..."
 rm -rf $DIRETORIO;
 mkdir -p $DIRETORIO;
-cd DIRETORIO;
+cd $DIRETORIO;
 echo -e "Clonando novo repositorio..."
 git clone $GITLINK$REPOSITORIO.git 2> /dev/null;
-
-# cd $REPOSITORIO;
-# Iniciar com o boot
-# python sala.py
 
 echo -e "Por favor, configure a saida de audio jack"
 sudo raspi-config > /dev/null;
