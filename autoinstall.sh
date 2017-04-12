@@ -3,7 +3,7 @@
 PACOTES_APT="git alsa-utils mpg123 python-dev python-rpi.gpio python-pip";
 PACOTES_PIP="pyfirmata";
 
-DIRETORIO="~/luz-ciencia-emocao";
+DIRETORIO="$HOME/luz-ciencia-emocao";
 REPOSITORIO="sala-intensidade";
 GITLINK="https://github.com/wsilverio/";
 
@@ -16,7 +16,7 @@ sudo pip install $PACOTES_PIP > /dev/null;
 
 echo -e "Removendo repositorio anterior..."
 rm -rf $DIRETORIO;
-mkdir $DIRETORIO;
+mkdir -p $DIRETORIO;
 cd DIRETORIO;
 echo -e "Clonando novo repositorio..."
 git clone $GITLINK$REPOSITORIO.git 2> /dev/null;
@@ -26,7 +26,7 @@ git clone $GITLINK$REPOSITORIO.git 2> /dev/null;
 # python sala.py
 
 echo -e "Por favor, configure a saida de audio jack"
-sudo raspi-config;
+sudo raspi-config > /dev/null;
 
 echo -e "Carregando modulo de audio..."
 sudo modprobe snd_bcm2835 > /dev/null;
