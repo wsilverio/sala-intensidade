@@ -118,17 +118,18 @@ try:
         # heartBeat(PI_LEDPIN)
         # continue
 
-        if isRasp:
-            
-            if GPIO.input(PI_INPIN) == 1: # Movimento detectado
-                pass
-        else:
-            pass
+        goHorse = False
 
-        p = subprocess.Popen(['mpg123', '-q', VOICE_FILE])
-        p.wait()
-        # th.join()
-        pwmControl(ArduinoBoard, ArduinoPin)
+        if isRasp:
+            if GPIO.input(PI_INPIN) == 1: # Movimento detectado
+                goHorse = True
+        else:
+            goHorse = True
+
+        if goHorse:
+            p = subprocess.Popen(['mpg123', '-q', VOICE_FILE])
+            pwmControl(ArduinoBoard, ArduinoPin)
+            p.wait()
 
         # time.sleep(5)
 
