@@ -11,27 +11,21 @@ echo -e "Atualizando o sistema..."
 sudo apt-get update -y > /dev/null;
 echo -e "Instalando pacotes..."
 sudo apt-get install -y $PACOTES_APT > /dev/null;
-echo -e "Instalando pacotes bibliotecas..."
+echo -e "Instalando bibliotecas..."
 sudo pip install $PACOTES_PIP > /dev/null;
 
+echo -e "Removendo repositorio anterior..."
+rm -rf $DIRETORIO;
 mkdir $DIRETORIO;
 cd DIRETORIO;
-echo -e "Clonando o repositorio remoto..."
-git clone $GITLINK$REPOSITORIO.git > /dev/null;
+echo -e "Clonando novo repositorio..."
+git clone $GITLINK$REPOSITORIO.git 2> /dev/null;
 
 # cd $REPOSITORIO;
 # Iniciar com o boot
 # python sala.py
 
-echo -e "Por favor, configure a saida de audio jack:"
-echo -e "\tAdvanced Options"
-echo -e "\tAudio"
-echo -e "\tForce 3.5mm ('headphone') jack"
-echo -e "\tOk"
-echo -e ""
-echo -e "Finish" 
-echo -e "\tWould you like to reboot now?"
-echo -e "\tNo"
+echo -e "Por favor, configure a saida de audio jack"
 sudo raspi-config;
 
 echo -e "Carregando modulo de audio..."
