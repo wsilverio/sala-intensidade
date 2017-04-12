@@ -121,9 +121,6 @@ if hasFirmata:
 
 p = None
 
-# th=Thread(target=pwmControl, args=(ArduinoBoard, ArduinoPin,))
-# th.start()
-
 threadHeart = Process(target=heartBeat, args=(PI_LEDPIN,))
 threadHeart.start()
 
@@ -148,7 +145,8 @@ try:
             pwmControl(ArduinoBoard, ArduinoPin, TEMPO_DESCIDA, DOWN)
 
 
-except KeyboardInterrupt:
+except Exception as e::
+
     threadHeart.terminate()
 
     if p != None:
@@ -156,21 +154,19 @@ except KeyboardInterrupt:
             p.terminate()
         except OSError:
             pass # processo ja terminado
-        except Exception as e:
-            raise e
 
     if hasFirmata:
         try:
             ArduinoPin.write(0)
             ArduinoBoard.exit()
-        except Exception as e:
-            raise e
+        except Exception:
+            pass
 
     if isRasp:
-        GPIO.output(PI_LEDPIN, GPIO.LOW)
-        GPIO.cleanup()
+        try:
+            GPIO.output(PI_LEDPIN, GPIO.LOW)
+            GPIO.cleanup()
+        except Exception:
+            pass
 
-    exit()
-
-except Exception as e:
     raise e
