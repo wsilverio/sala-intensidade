@@ -51,18 +51,8 @@ pass: raspberry
 bash <(curl -s https://raw.githubusercontent.com/wsilverio/sala-intensidade/master/autoinstall.sh)
 ```
 
-* Configurar a saída de áudio:
+* Configurar a saída de áudio (**obs: sem reiniciar o sistema**):
 `Advanced Options >> Audio >> Force 3.5mm ('headphone') jack >> Ok`
+`Finish >>  Would you like to reboot now? >> No`  
 
-* Reiniciar o sistema  
-`Finish >> Reboot >> Yes`  
-```bash
-sudo reboot
-```
-
-<!--Carregar os drivers e configure a saída de audio (jack 3.5mm):
-```bash
-sudo modprobe snd_bcm2835
-sudo amixer cset numid=3 1
-```
--->
+* O sistema reiniciará automaticamente  
