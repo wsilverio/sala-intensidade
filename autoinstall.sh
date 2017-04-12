@@ -3,8 +3,8 @@
 PACOTES_APT="git alsa-utils mpg123 python-dev python-rpi.gpio python-pip";
 PACOTES_PIP="pyfirmata";
 
-DIRETORIO="$HOME/luz-ciencia-emocao";
 REPOSITORIO="sala-intensidade";
+DIRETORIO="$HOME";
 GITLINK="https://github.com/wsilverio/";
 
 clear;
@@ -29,8 +29,8 @@ echo -e "Instalando bibliotecas..."
 sudo pip install $PACOTES_PIP > /dev/null;
 
 echo -e "Removendo repositorio anterior..."
-rm -rf $DIRETORIO;
-mkdir -p $DIRETORIO;
+rm -rf $DIRETORIO/$REPOSITORIO;
+# mkdir -p $DIRETORIO;
 cd $DIRETORIO;
 echo -e "Clonando novo repositorio..."
 git clone $GITLINK$REPOSITORIO.git 2> /dev/null;
