@@ -47,7 +47,7 @@ pass: raspberry
 
 * Executar o instalador automático (este passo pode levar alguns minutos):
 ```bash
-bash <(curl -s link)
+bash <(curl -s https://raw.githubusercontent.com/wsilverio/sala-intensidade/master/autoinstall.sh)
 ```
 
 * Configurar a saída de áudio:
