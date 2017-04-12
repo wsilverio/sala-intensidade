@@ -45,5 +45,8 @@ sudo amixer cset numid=3 1 > /dev/null;
 echo -e "Configurando volume 100%..."
 amixer sset PCM,0 100% > /dev/null;
 
+echo -e "Abrindo crontab..."
+sudo crontab -e;
+
 echo -e "Reiniciando o sistema..."
 sudo reboot;
