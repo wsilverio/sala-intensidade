@@ -9,13 +9,13 @@ GITLINK="https://github.com/wsilverio/";
 
 clear;
 
-echo - e "#     # ####### ######  ######  ";
-echo - e "#     # #       #     # #     # ";
-echo - e "#     # #       #     # #     # ";
-echo - e "#     # #####   ######  ######  ";
-echo - e "#     # #       #       #   #   ";
-echo - e "#     # #       #       #    #  ";
-echo - e " #####  #       #       #     # ";
+echo -e "#     # ####### ######  ######  ";
+echo -e "#     # #       #     # #     # ";
+echo -e "#     # #       #     # #     # ";
+echo -e "#     # #####   ######  ######  ";
+echo -e "#     # #       #       #   #   ";
+echo -e "#     # #       #       #    #  ";
+echo -e " #####  #       #       #     # ";
 
 echo -e "LUZ CIENCIA E EMOCAO"
 
