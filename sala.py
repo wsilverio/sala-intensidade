@@ -15,10 +15,15 @@ VOICE_FILE = './intensidade.mp3' # Localização do arquivo de voz
 isRasp = True       # Raspberry Pi plataforma
 hasFirmata = True   # Firmata modulo
 
-MIN = 0             # PWM max
-MAX = 255           # PWM min
-STEP = 1            # PWM passo
-DELAYMS = 10        # Delay (ms)
+INTENSIDADES = 255  # Quantidade de valores de PWM entre 0->1
+TEMPO_ENTRADA = 30  # Tempo (s) para começar a acender
+TEMPO_SUBIDA = 15   # Tempo (s) para o PWM ir de 0->1
+TEMPO_DESCIDA = 3   # Tempo (s) para o PWM ir de 1->0
+TEMPO_SAIDA = 15    # Tempo (s) para o pessoal deixar a sala
+EXP = 3             # Ajuste exponencial
+
+UP = True
+DOWN = False
 
 ARD_OUTPIN = 'd:3:p'    # Arduino pino
 
@@ -27,14 +32,19 @@ PI_LEDPIN = 11          # Raspberry pino (número no conector)
 
 timeToExit = False
 
-def pwmControl(board, out):
+def pwmControl(board, out, tempo, mode):
     if hasFirmata:
-        for i in xrange(MIN, MAX, STEP):
-            value = i/float(MAX)
-            out.write(value)
-            board.pass_time(delay)
-            # print value
-        out.write(0)
+        for i in ( ((x/float(INTENSIDADES))**EXP) for x in range(1, INTENSIDADES+1) ):
+            if mode == UP:
+                out.write(i)
+            else:
+                out.write(1-i)
+            board.pass_time(tempo/float(INTENSIDADES))
+            # if not isRasp:
+            #     print i
+        
+        if mode == DOWN:
+            out.write(0)
     
 def checkPort():
     port = None
@@ -46,13 +56,11 @@ def checkPort():
     return port
 
 def heartBeat(pin):
-    tempo_ms = [50, 100, 15, 1200]
-    toSeconds = lambda x: x/1000.0
-    tempos = [toSeconds(i) for i in tempo_ms]
+    tempos = [i/1000.0 for i in [50, 100, 15, 1200]]
 
     while True:
-                # GPIO.output(pin, GPIO.LOW)
-
+        if not isRasp:
+            print ""
         for i in xrange(0, len(tempos)):
             if (i % 2):
                 if isRasp:
@@ -63,7 +71,10 @@ def heartBeat(pin):
                 else:
                     print "*"
     
-            time.sleep(tempos[i])
+            try:
+                time.sleep(tempos[i])
+            except Exception:
+                break
 
 try:
     from pyfirmata import Arduino, util
@@ -94,17 +105,21 @@ while PORT == None:
     PORT = checkPort()
     time.sleep(5)
 
-print 'Conectando a', PORT
-
 ArduinoBoard = None
 ArduinoPin = None
 
 if hasFirmata:
-    ArduinoBoard = Arduino(PORT)
-    ArduinoPin = ArduinoBoard.get_pin(ARD_OUTPIN)
+    try:
+        print 'Conectando a', PORT
+        ArduinoBoard = Arduino(PORT)
+        ArduinoPin = ArduinoBoard.get_pin(ARD_OUTPIN)
+    except Exception as e:
+        print "Não foi possível conectar."
+        raise e
+    else:
+        print "Conectado."
 
 p = None
-delay = DELAYMS/1000.0
 
 # th=Thread(target=pwmControl, args=(ArduinoBoard, ArduinoPin,))
 # th.start()
@@ -115,9 +130,6 @@ threadHeart.start()
 try:
     while True:
 
-        # heartBeat(PI_LEDPIN)
-        # continue
-
         goHorse = False
 
         if isRasp:
@@ -127,11 +139,14 @@ try:
             goHorse = True
 
         if goHorse:
+            # time.sleep(5)
             p = subprocess.Popen(['mpg123', '-q', VOICE_FILE])
-            pwmControl(ArduinoBoard, ArduinoPin)
+            time.sleep(TEMPO_ENTRADA)
+            pwmControl(ArduinoBoard, ArduinoPin, TEMPO_SUBIDA, UP)
             p.wait()
+            time.sleep(TEMPO_SAIDA)
+            pwmControl(ArduinoBoard, ArduinoPin, TEMPO_DESCIDA, DOWN)
 
-        # time.sleep(5)
 
 except KeyboardInterrupt:
     threadHeart.terminate()
