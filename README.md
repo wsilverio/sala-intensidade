@@ -5,6 +5,7 @@
 - Lançar o programa no boot
 - Heartbeat	
 - Documentação
+- Placa conversor de nível (sensor)
 
 ### Arduino IDE:
 
@@ -53,12 +54,12 @@ bash <(curl -s https://raw.githubusercontent.com/wsilverio/sala-intensidade/mast
 * Configurar a saída de áudio:
 `Advanced Options >> Audio >> Force 3.5mm ('headphone') jack >> Ok`
 
-* Reiniciar o sistema
-`Finish >> Reboot >> Yes`
-<!--```bash
+* Reiniciar o sistema  
+`Finish >> Reboot >> Yes`  
+```bash
 sudo reboot
 ```
--->
+
 <!--Carregar os drivers e configure a saída de audio (jack 3.5mm):
 ```bash
 sudo modprobe snd_bcm2835
