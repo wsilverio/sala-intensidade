@@ -145,7 +145,7 @@ try:
             pwmControl(ArduinoBoard, ArduinoPin, TEMPO_DESCIDA, DOWN)
 
 
-except Exception as e::
+except Exception as e:
 
     threadHeart.terminate()
 
