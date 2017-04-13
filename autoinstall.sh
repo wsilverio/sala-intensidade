@@ -4,6 +4,7 @@ PACOTES_APT="git alsa-utils mpg123 python-dev python-rpi.gpio python-pip";
 PACOTES_PIP="pyfirmata";
 
 REPOSITORIO="sala-intensidade";
+ARQUIVO="main.py"
 DIRETORIO="$HOME";
 GITLINK="https://github.com/wsilverio/";
 
@@ -45,8 +46,11 @@ sudo amixer cset numid=3 1 > /dev/null;
 echo -e "Configurando volume 100%..."
 amixer sset PCM,0 100% > /dev/null;
 
-echo -e "Abrindo crontab..."
-sudo crontab -e;
+echo -e "Removendo tarefas anteriores..."
+crontab -r;
+echo -e "Adicionando nova tarefa ao Crontab..."
+crontab -l | { cat; echo "@reboot cd $DIRETORIO/$REPOSITORIO && python $ARQUIVO"; } | crontab -;
 
 echo -e "Reiniciando o sistema..."
+echo -e "O programa se iniciara automaticamente no proximo boot."
 sudo reboot;

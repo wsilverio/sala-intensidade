@@ -1,11 +1,5 @@
 ##### TODO list:
 - PCB
-- Instalador automático
-	- git clone, diretório
-- Lançar o programa no boot
-- Heartbeat	
-- Documentação
-- Placa conversor de nível (sensor)
 
 ### Arduino IDE:
 
@@ -33,7 +27,7 @@
 
 * Montar a partição `boot` e habilitar a conexão ssh:
 ```bash
-cd /media/user/boot # (obs: o endereço pode ser outro)
+cd /media/$USER/boot # (obs: o endereço pode ser outro)
 touch ssh
 ```
 
@@ -55,7 +49,11 @@ bash <(curl -s https://raw.githubusercontent.com/wsilverio/sala-intensidade/mast
 `Advanced Options >> Audio >> Force 3.5mm ('headphone') jack >> Ok`
 `Finish >>  Would you like to reboot now? >> No`  
 
-* Adicionar a seguinte linha ao crontab:
-`@reboot cd /home/pi/sala-intensidade/ && python sala.py`
+* O sistema reiniciará automaticamente.  
+* O programa se iniciará automaticamente nos próximos boots.  
 
-* O sistema reiniciará automaticamente  
+##### Obtento a última versão do projeto
+* Sempre que houver uma nova atualização do projeto:
+```bash
+bash <(curl -s https://raw.githubusercontent.com/wsilverio/sala-intensidade/master/autoinstall.sh)
+```
