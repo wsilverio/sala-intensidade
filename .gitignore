@@ -1,7 +1,10 @@
 ### Proteus ###
 *.workspace
 *.pdsbak
-
+*.rte
+*.DO
+*.EDF
+*.sts
 
 # Created by https://www.gitignore.io/api/python
 
