@@ -3,9 +3,6 @@
 
 '''
 TODO list:
-    Heartbeat
-    Progressão exponencial
-    Audio
 '''
 import os, subprocess, sys, time
 from multiprocessing import Process, Value
@@ -127,15 +124,15 @@ threadHeart.start()
 try:
     while True:
 
-        goHorse = False
+        playAudio = False
 
         if isRasp:
             if GPIO.input(PI_INPIN) == 1: # Movimento detectado
-                goHorse = True
+                playAudio = True
         else:
-            goHorse = True
+            playAudio = True
 
-        if goHorse:
+        if playAudio:
             # time.sleep(5)
             p = subprocess.Popen(['mpg123', '-q', VOICE_FILE])
             time.sleep(TEMPO_ENTRADA)
