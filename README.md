@@ -1,20 +1,21 @@
 ##### TODO list:
 - PCB
+- **Verificar alimentação Arduino - cabo USB / 12V**
 
 ### Arduino IDE:
 
 ##### Carregando o firmware do Arduino
 
-* Abrir o sketch [Standard Firmata](https://github.com/firmata/arduino/blob/master/examples/StandardFirmata/StandardFirmata.ino):
+* Abrir o sketch [Standard Firmata](https://github.com/firmata/arduino/blob/master/examples/StandardFirmata/StandardFirmata.ino):  
 `File >> Examples >> Firmata >> StandardFirmata`
 
-* Selecionar placa:
+* Selecionar placa:  
 `Tools >> Board >> Arduino/Genuino UNO`
 
-* Selecionar microcontrolador:
+* Selecionar microcontrolador:  
 `Tools >> Processor >> ATmega328`
 
-* Gravar o sketch:
+* Gravar o sketch:  
 `Sketch >> Upload`
 
 ### Raspberry Pi:
@@ -36,7 +37,7 @@ touch ssh
 
 * Acessar o Raspberry Pi:
 ```bash
-ssh pi@raspberrypi # (obs: o IP ou hostname pode ser outro)
+ssh pi@raspberrypi # (obs: usuário, IP ou hostname podem ser outros)
 pass: raspberry
 ```
 
@@ -45,8 +46,8 @@ pass: raspberry
 bash <(curl -s https://raw.githubusercontent.com/wsilverio/sala-intensidade/master/autoinstall.sh)
 ```
 
-* Configurar a saída de áudio (**obs: sem reiniciar o sistema**):
-`Advanced Options >> Audio >> Force 3.5mm ('headphone') jack >> Ok`
+* Configurar a saída de áudio (**obs: sem reiniciar o sistema**):  
+`Advanced Options >> Audio >> Force 3.5mm ('headphone') jack >> Ok`  
 `Finish >>  Would you like to reboot now? >> No`  
 
 * O sistema reiniciará automaticamente.  
