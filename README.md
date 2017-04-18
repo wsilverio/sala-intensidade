@@ -1,5 +1,4 @@
 ##### TODO list:
-- PCB
 - **Verificar alimentação Arduino - cabo USB / 12V**
 
 ### Arduino IDE:
