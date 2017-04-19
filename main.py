@@ -25,7 +25,7 @@ DOWN = False
 ARD_OUTPIN = 'd:3:p'    # Arduino pino
 
 PI_INPIN = 7            # Raspberry pino (número no conector)
-PI_LEDPIN = 11          # Raspberry pino (número no conector)
+PI_LEDPIN = 13          # Raspberry pino (número no conector)
 
 timeToExit = False
 
