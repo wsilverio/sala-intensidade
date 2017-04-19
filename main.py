@@ -17,7 +17,7 @@ TEMPO_ENTRADA = 30  # Tempo (s) para começar a acender
 TEMPO_SUBIDA = 15   # Tempo (s) para o PWM ir de 0->1
 TEMPO_DESCIDA = 3   # Tempo (s) para o PWM ir de 1->0
 TEMPO_SAIDA = 15    # Tempo (s) para o pessoal deixar a sala
-EXP = 3             # Ajuste exponencial
+EXP = 4             # Ajuste exponencial
 
 UP = True
 DOWN = False
