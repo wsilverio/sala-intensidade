@@ -35,19 +35,17 @@ touch ssh
 * Inserir o cartão de memória e conectar os cabos de alimentação e rede.
 
 * **Acessar o Raspberry Pi:**  
-	- Via roteador:  
-	```bash
+ - Via roteador:  
+```bash
 ssh pi@raspberrypi # (obs: usuário, IP ou hostname podem ser outros)
 # pass: raspberry
 ```  
-	- Crossover:  
-		- Editar conexão **Ethernet**:  
+ - Crossover:  
+ 	- Editar conexão **Ethernet**:  
 ```bash
 nm-connection-editor
 ```  
-
-		- `Edit >> IPv4 Settings >> Method >> Shared to others computes >> Save`  
-		- 
+	- `Edit >> IPv4 Settings >> Method >> Shared to others computes >> Save`  
 ```bash
 sudo service network-manager restart
 ifconfig eth1 # (obs: o nome da interface pode ser outro)
