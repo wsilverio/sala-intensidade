@@ -45,7 +45,7 @@ ssh pi@raspberrypi # (obs: usuário, IP ou hostname podem ser outros)
 ```bash
 nm-connection-editor
 ```  
-	- `Edit >> IPv4 Settings >> Method >> Shared to others computes >> Save`  
+	`Edit >> IPv4 Settings >> Method >> Shared to others computes >> Save`  
 ```bash
 sudo service network-manager restart
 ifconfig eth1 # (obs: o nome da interface pode ser outro)
