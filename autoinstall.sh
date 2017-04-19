@@ -49,7 +49,7 @@ amixer sset PCM,0 100% > /dev/null;
 echo -e "Removendo tarefas anteriores..."
 crontab -r;
 echo -e "Adicionando nova tarefa ao Crontab..."
-crontab -l | { cat; echo "@reboot cd $DIRETORIO/$REPOSITORIO && python $ARQUIVO"; } | crontab -;
+echo "@reboot cd $DIRETORIO/$REPOSITORIO && python $ARQUIVO" | crontab -;
 
 echo -e "Reiniciando o sistema..."
 echo -e "O programa se iniciara automaticamente no proximo boot."
