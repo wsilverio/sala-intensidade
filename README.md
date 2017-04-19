@@ -34,10 +34,29 @@ touch ssh
 ##### Configurando o Raspberry Pi
 * Inserir o cartão de memória e conectar os cabos de alimentação e rede.
 
-* Acessar o Raspberry Pi:
-```bash
+* **Acessar o Raspberry Pi:**  
+	- Via roteador:  
+	```bash
 ssh pi@raspberrypi # (obs: usuário, IP ou hostname podem ser outros)
-pass: raspberry
+# pass: raspberry
+```  
+	- Crossover:  
+		- Editar conexão **Ethernet**:  
+```bash
+nm-connection-editor
+```  
+
+		- `Edit >> IPv4 Settings >> Method >> Shared to others computes >> Save`  
+		- 
+```bash
+sudo service network-manager restart
+ifconfig eth1 # (obs: o nome da interface pode ser outro)
+# ... Bcast:10.42.0.255 ...
+nmap -n -sP 10.42.0.255/24
+# ... Nmap scan report for 10.42.0.X # Laptop
+# ... Nmap scan report for 10.42.0.Y # Raspberry Pi
+ssh pi@10.42.0.Y # (obs: usuário pode ser outro)
+# pass: raspberry
 ```
 
 * Executar o instalador automático (este passo pode levar alguns minutos):
