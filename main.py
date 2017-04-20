@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-'''
-TODO list:
-'''
 import os, subprocess, sys, time
 from multiprocessing import Process, Value
 
@@ -25,7 +22,7 @@ DOWN = False
 ARD_OUTPIN = 'd:3:p'    # Arduino pino
 
 PI_INPIN = 7            # Raspberry pino (número no conector)
-PI_LEDPIN = 13          # Raspberry pino (número no conector)
+PI_LEDPIN = 11          # Raspberry pino (número no conector)
 
 timeToExit = False
 
@@ -91,6 +88,9 @@ try:
 except ImportError:
     isRasp = False
     print "Plataforma: Não Raspberry Pi\n"
+
+if isRasp:
+    GPIO.output(PI_LEDPIN, GPIO.HIGH)
 
 PORT = checkPort()  # Arduino porta ('/dev/ttyUSBx' or '/dev/ttyACMx')
 
