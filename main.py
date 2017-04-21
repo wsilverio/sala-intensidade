@@ -19,23 +19,30 @@ EXP = 4             # Ajuste exponencial
 UP = True
 DOWN = False
 
-ARD_OUTPIN = 'd:3:p'    # Arduino pino
+ARD_OUTPINS = ['d:3:p', 'd:5:p', 'd:6:p', 'd:9:p', 'd:10:p', 'd:11:p'] # Arduino pinos
 
 PI_INPIN = 7            # Raspberry pino (número no conector)
 PI_LEDPIN = 11          # Raspberry pino (número no conector)
 
 timeToExit = False
 
-def pwmControl(board, out, tempo, mode):
+def pwmControl(board, outs, tempo, mode):
     if hasFirmata:
         for i in ( ((x/float(INTENSIDADES))**EXP) for x in range(1, INTENSIDADES+1) ):
             if mode == UP:
-                out.write(i)
+                for out in outs:
+                    out.write(i)
             else:
-                out.write(1-i)
+                for out in outs:
+                    out.write(1-i)
+            
             board.pass_time(tempo/float(INTENSIDADES))
-            # if not isRasp:
-            #     print i
+            
+            if not isRasp:
+                if mode == UP:
+                    print i
+                else:
+                    print(1-i)
         
         if mode == DOWN:
             out.write(0)
@@ -53,22 +60,13 @@ def heartBeat(pin):
     tempos = [i/1000.0 for i in [50, 100, 15, 1200]]
 
     while True:
-        if not isRasp:
-            print ""
         for i in xrange(0, len(tempos)):
             if (i % 2):
-                if isRasp:
-                    GPIO.output(pin, GPIO.LOW)
+                GPIO.output(pin, GPIO.LOW)
             else:
-                if isRasp:
-                    GPIO.output(pin, GPIO.HIGH)
-                else:
-                    print "*"
+                GPIO.output(pin, GPIO.HIGH)
     
-            try:
-                time.sleep(tempos[i])
-            except Exception:
-                break
+            time.sleep(tempos[i])
 
 try:
     from pyfirmata import Arduino, util
@@ -103,13 +101,16 @@ while PORT == None:
     time.sleep(5)
 
 ArduinoBoard = None
-ArduinoPin = None
+ArduinoPins = []
 
 if hasFirmata:
     try:
         print 'Conectando a', PORT
         ArduinoBoard = Arduino(PORT)
-        ArduinoPin = ArduinoBoard.get_pin(ARD_OUTPIN)
+
+        for pin in ARD_OUTPINS:
+            ArduinoPins.append(ArduinoBoard.get_pin(pin))
+            
     except Exception as e:
         print "Não foi possível conectar."
         raise e
@@ -117,9 +118,11 @@ if hasFirmata:
         print "Conectado."
 
 p = None
+threadHeart = None
 
-threadHeart = Process(target=heartBeat, args=(PI_LEDPIN,))
-threadHeart.start()
+if isRasp:
+    threadHeart = Process(target=heartBeat, args=(PI_LEDPIN,))
+    threadHeart.start()
 
 try:
     while True:
@@ -133,18 +136,31 @@ try:
             playAudio = True
 
         if playAudio:
-            # time.sleep(5)
             p = subprocess.Popen(['mpg123', '-q', VOICE_FILE])
+            
             time.sleep(TEMPO_ENTRADA)
-            pwmControl(ArduinoBoard, ArduinoPin, TEMPO_SUBIDA, UP)
+            pwmControl(ArduinoBoard, ArduinoPins, TEMPO_SUBIDA, UP)
+            
+            time.sleep(50-TEMPO_SUBIDA-TEMPO_ENTRADA)
+            pwmControl(ArduinoBoard, ArduinoPins, 3, DOWN)
+            time.sleep(1)
+            pwmControl(ArduinoBoard, ArduinoPins, 3, UP)
+            time.sleep(1)
+            pwmControl(ArduinoBoard, ArduinoPins, 3, DOWN)
+            time.sleep(1)
+            pwmControl(ArduinoBoard, ArduinoPins, 3, UP)
+            time.sleep(1)
+            
             p.wait()
             time.sleep(TEMPO_SAIDA)
-            pwmControl(ArduinoBoard, ArduinoPin, TEMPO_DESCIDA, DOWN)
+            pwmControl(ArduinoBoard, ArduinoPins, TEMPO_DESCIDA, DOWN)
 
+            time.sleep(5)
 
 except Exception as e:
 
-    threadHeart.terminate()
+    if threadHeart != None:
+        threadHeart.terminate()
 
     if p != None:
         try:
@@ -154,7 +170,9 @@ except Exception as e:
 
     if hasFirmata:
         try:
-            ArduinoPin.write(0)
+            for pin in ArduinoPins:
+                pin.write(0)
+            
             ArduinoBoard.exit()
         except Exception:
             pass
